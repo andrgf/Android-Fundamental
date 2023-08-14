@@ -1,17 +1,17 @@
-package com.example.githubuser.ui.home
+package com.example.githubuser.ui
 
 import android.util.Log
-import androidx.lifecycle.*
-import com.example.githubuser.data.remote.User
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.example.githubuser.data.remote.UserResponse
+import com.example.githubuser.data.remote.User
 import com.example.githubuser.network.ApiClient
-import com.example.githubuser.ui.setting.SettingsPreferences
-import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeViewModel(private val pref: SettingsPreferences) : ViewModel() {
+class MainViewModel: ViewModel() {
 
     val listUsers = MutableLiveData<ArrayList<User>>()
 
@@ -21,7 +21,7 @@ class HomeViewModel(private val pref: SettingsPreferences) : ViewModel() {
     fun setSearchUsers(query: String) {
         ApiClient.instanceApi
             .getSearchUser(query)
-            .enqueue(object : Callback<UserResponse> {
+            .enqueue(object : Callback<UserResponse>{
                 override fun onResponse(
                     call: Call<UserResponse>,
                     response: Response<UserResponse>
@@ -41,9 +41,5 @@ class HomeViewModel(private val pref: SettingsPreferences) : ViewModel() {
 
     fun getSearchUser() : LiveData<ArrayList<User>> {
         return listUsers
-    }
-
-    fun getThemeSetting(): LiveData<Boolean> {
-        return pref.getThemeSetting().asLiveData()
     }
 }

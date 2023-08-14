@@ -28,9 +28,7 @@ class DetailUserActivity : AppCompatActivity() {
         supportActionBar?.title = getString(R.string.detail_user)
 
         val username = intent.getStringExtra(EXTRA_USERNAME) ?: ""
-        val avatar = intent.getStringExtra(EXTRA_AVATAR).toString()
         val id = intent.getIntExtra(EXTRA_ID, 0)
-        val htmlUrl = intent.getStringExtra(EXTRA_HTML).toString()
 
         val bundle = Bundle()
         bundle.putString(EXTRA_USERNAME, username)
@@ -61,33 +59,6 @@ class DetailUserActivity : AppCompatActivity() {
                 showLoading(false)
             }
         }
-
-        var _isCheck = false
-        CoroutineScope(Dispatchers.IO).launch {
-            val count = viewModel.checkUser(id)
-            withContext(Dispatchers.Main) {
-                if (count!= null) {
-                    if (count>0) {
-                        binding.btnFavorite.isChecked = true
-                        _isCheck = true
-                    } else {
-                        binding.btnFavorite.isChecked = false
-                        _isCheck = false
-                    }
-                }
-            }
-        }
-
-        binding.btnFavorite.setOnClickListener{
-            _isCheck = !_isCheck
-            if (_isCheck) {
-                viewModel.addToFavorite(avatar, htmlUrl, id, username)
-            } else {
-                viewModel.removeFromFavorite(id)
-            }
-            binding.btnFavorite.isChecked = _isCheck
-        }
-
 
         sectionPagerAdapter = SectionPagerAdapter(this, bundle)
         binding.apply {

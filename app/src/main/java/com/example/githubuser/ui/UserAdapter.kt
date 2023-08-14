@@ -51,7 +51,6 @@ class UserAdapter: RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         holder.bind(list[position])
-        holder.setIsRecyclable(false)
     }
 
     override fun getItemCount(): Int = list.size
@@ -59,19 +58,4 @@ class UserAdapter: RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
     interface OnItemClickCallback{
         fun onItemClicked(data: User)
     }
-
-    // i cant implement
-    /*
-    private val differCallback = object : DiffUtil.ItemCallback<User>() {
-        override fun areItemsTheSame(oldItem: User, newItem: User): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
-            return oldItem == newItem
-        }
-    }
-
-    val differ = AsyncListDiffer(this, differCallback)
-    */
 }

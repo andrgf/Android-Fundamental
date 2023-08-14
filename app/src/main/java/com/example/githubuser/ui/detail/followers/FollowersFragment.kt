@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubuser.R
-import com.example.githubuser.data.remote.User
 import com.example.githubuser.databinding.FragmentFollowBinding
 import com.example.githubuser.ui.UserAdapter
 import com.example.githubuser.ui.detail.DetailUserActivity
