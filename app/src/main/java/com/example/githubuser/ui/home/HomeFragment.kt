@@ -14,9 +14,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubuser.data.remote.User
-import com.example.githubuser.data.remote.UserResponse
 import com.example.githubuser.databinding.FragmentHomeBinding
-import com.example.githubuser.ui.UserAdapter
+import com.example.githubuser.ui.main.UserAdapter
 import com.example.githubuser.ui.detail.DetailUserActivity
 import com.example.githubuser.ui.setting.SettingViewModelFactory
 import com.example.githubuser.ui.setting.SettingsPreferences
@@ -89,7 +88,7 @@ class HomeFragment : Fragment() {
 
         homeViewModel.getSearchUser().observe(requireActivity()) {
             if (it != null) {
-                userAdapter.setList(it)
+                userAdapter.updateList(it)
                 showLoading(false)
             }
         }
@@ -107,20 +106,13 @@ class HomeFragment : Fragment() {
     private fun searchUser() {
         binding.apply {
             rvSearchUser.adapter = userAdapter
-            userAdapter.clearList()
             showLoading(true)
             homeViewModel.setSearchUsers(etQuery)
         }
     }
 
     private fun showLoading(state: Boolean) {
-        binding.apply {
-            if (state) {
-                progressBar.visibility = View.VISIBLE
-            } else {
-                progressBar.visibility = View.GONE
-            }
-        }
+        binding.progressBar.visibility = if (state) View.VISIBLE else View.GONE
     }
 
     override fun onDestroyView() {

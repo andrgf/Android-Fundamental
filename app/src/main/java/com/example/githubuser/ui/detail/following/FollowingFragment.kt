@@ -2,13 +2,12 @@ package com.example.githubuser.ui.detail.following
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubuser.R
 import com.example.githubuser.databinding.FragmentFollowBinding
-import com.example.githubuser.ui.UserAdapter
+import com.example.githubuser.ui.main.UserAdapter
 import com.example.githubuser.ui.detail.DetailUserActivity
 
 
@@ -25,7 +24,7 @@ class FollowingFragment: Fragment(R.layout.fragment_follow) {
         username = arguments?.getString(DetailUserActivity.EXTRA_USERNAME).toString()
         _binding = FragmentFollowBinding.bind(view)
 
-        setUpAdapter()
+        adapter = UserAdapter()
         setUpAction()
 
     }
@@ -50,25 +49,14 @@ class FollowingFragment: Fragment(R.layout.fragment_follow) {
         viewModel.setListFollowing(username)
         viewModel.getListFollowing().observe(viewLifecycleOwner){
             if (it != null) {
-                adapter.setList(it)
+                adapter.updateList(it)
                 showLoading(false)
             }
         }
     }
 
-    private fun setUpAdapter() {
-        adapter = UserAdapter()
-        adapter.notifyDataSetChanged()
-    }
-
     private fun showLoading(state: Boolean) {
-        binding.apply {
-            if (state) {
-                progressBar.visibility = View.VISIBLE
-            } else {
-                progressBar.visibility = View.GONE
-            }
-        }
+        binding.progressBar.visibility = if (state) View.VISIBLE else View.GONE
     }
 
     override fun onDestroy() {

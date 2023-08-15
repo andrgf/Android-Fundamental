@@ -1,7 +1,8 @@
-package com.example.githubuser.ui
+package com.example.githubuser.ui.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -10,21 +11,18 @@ import com.example.githubuser.databinding.ItemUserBinding
 
 class UserAdapter: RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
-    private val list = ArrayList<User>()
+    private var list = ArrayList<User>()
 
     private var onItemClickCallback: OnItemClickCallback? = null
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback
     }
 
-    fun setList(users: ArrayList<User>) {
-        list.clear()
-        list.addAll(users)
-        notifyDataSetChanged()
-    }
-
-    fun clearList() {
-        list.clear()
+    fun updateList(newList: ArrayList<User>) {
+        val userDiff = UserDiffutils(list, newList)
+        val result = DiffUtil.calculateDiff(userDiff)
+        list = newList
+        result.dispatchUpdatesTo(this)
     }
 
     inner class UserViewHolder(private val binding: ItemUserBinding): RecyclerView.ViewHolder(binding.root) {
@@ -59,19 +57,4 @@ class UserAdapter: RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
     interface OnItemClickCallback{
         fun onItemClicked(data: User)
     }
-
-    // i cant implement
-    /*
-    private val differCallback = object : DiffUtil.ItemCallback<User>() {
-        override fun areItemsTheSame(oldItem: User, newItem: User): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
-            return oldItem == newItem
-        }
-    }
-
-    val differ = AsyncListDiffer(this, differCallback)
-    */
 }

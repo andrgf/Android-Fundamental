@@ -6,13 +6,12 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubuser.data.remote.User
 import com.example.githubuser.databinding.FragmentSearchBinding
-import com.example.githubuser.ui.UserAdapter
+import com.example.githubuser.ui.main.UserAdapter
 import com.example.githubuser.ui.detail.DetailUserActivity
 
 class SearchFragment : Fragment() {
@@ -89,27 +88,20 @@ class SearchFragment : Fragment() {
 
         searchViewModel.getSearchUser().observe(requireActivity()) {
             if (it != null) {
-                userAdapter.setList(it)
+                userAdapter.updateList(it)
                 showLoading(false)
             }
         }
     }
 
     private fun showLoading(state: Boolean) {
-        binding.apply {
-            if (state) {
-                progressBar.visibility = View.VISIBLE
-            } else {
-                progressBar.visibility = View.GONE
-            }
-        }
+        binding.progressBar.visibility = if (state) View.VISIBLE else View.GONE
     }
 
     private fun searchUser() {
         binding.apply {
             val query = etQuery.text.toString()
             rvSearch.adapter = userAdapter
-            userAdapter.clearList()
             showLoading(true)
             searchViewModel.setSearchUsers(query)
         }

@@ -5,8 +5,8 @@
     <string name="title_notifications">Notifications</string>
     <string name="name">Name</string>
     <string name="username">Username</string>
-    <string name="followers">Followers</string>
-    <string name="following">Following</string>
+    <string name="followers">%1$s Followers</string>
+    <string name="following">%1$s Following</string>
     <string name="detail_user">Detail User</string>
     <string name="dark_mode">Dark Mode</string>
     <string name="settings">Settings</string>

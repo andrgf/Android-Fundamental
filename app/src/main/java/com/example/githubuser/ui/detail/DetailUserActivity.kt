@@ -50,8 +50,8 @@ class DetailUserActivity : AppCompatActivity() {
                 binding.apply {
                     tvUsername.text = it.login
                     tvName.text = it.name
-                    tvFollowers.text = "${it.followers} Followers"
-                    tvFollowing.text = "${it.following} Following"
+                    tvFollowers.text = getString(R.string.followers, it.followers.toString())
+                    tvFollowing.text = getString(R.string.following, it.following.toString())
                     Glide.with(this@DetailUserActivity)
                         .load(it.avatarUrl)
                         .centerCrop()
@@ -101,13 +101,7 @@ class DetailUserActivity : AppCompatActivity() {
 
 
     private fun showLoading(state: Boolean) {
-        binding.apply {
-            if (state) {
-                progressBar.visibility = View.VISIBLE
-            } else {
-                progressBar.visibility = View.GONE
-            }
-        }
+        binding.progressBar.visibility = if (state) View.VISIBLE else View.GONE
     }
 
     companion object {

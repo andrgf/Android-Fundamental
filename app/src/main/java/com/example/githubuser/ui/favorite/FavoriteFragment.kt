@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubuser.data.local.FavoriteEntity
 import com.example.githubuser.data.remote.User
 import com.example.githubuser.databinding.FragmentFavoriteBinding
-import com.example.githubuser.ui.UserAdapter
+import com.example.githubuser.ui.main.UserAdapter
 import com.example.githubuser.ui.detail.DetailUserActivity
 
 class FavoriteFragment : Fragment() {
@@ -34,7 +34,7 @@ class FavoriteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setUpAdapter()
+        userAdapter = UserAdapter()
         setUpAction()
 
     }
@@ -64,14 +64,9 @@ class FavoriteFragment : Fragment() {
         favoriteViewModel.getFavoriteUser()?.observe(requireActivity()) {
             if (it!=null) {
                 val list = mapList(it)
-                userAdapter.setList(list)
+                userAdapter.updateList(list)
             }
         }
-    }
-
-    private fun setUpAdapter() {
-        userAdapter = UserAdapter()
-        userAdapter.notifyDataSetChanged()
     }
 
     private fun mapList(users: List<FavoriteEntity>): ArrayList<User> {
