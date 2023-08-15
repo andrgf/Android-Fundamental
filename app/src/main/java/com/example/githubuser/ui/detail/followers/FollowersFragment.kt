@@ -24,7 +24,7 @@ class FollowersFragment: Fragment(R.layout.fragment_follow) {
         username = arguments?.getString(DetailUserActivity.EXTRA_USERNAME).toString()
         _binding = FragmentFollowBinding.bind(view)
 
-        setUpAdapter()
+        adapter = UserAdapter()
         setUpAction()
 
 
@@ -50,15 +50,10 @@ class FollowersFragment: Fragment(R.layout.fragment_follow) {
         viewModel.setListFollowers(username)
         viewModel.getListFollowers().observe(viewLifecycleOwner) {
             if (it != null) {
-                adapter.setList(it)
+                adapter.updateList(it)
                 showLoading(false)
             }
         }
-    }
-
-    private fun setUpAdapter() {
-        adapter = UserAdapter()
-        adapter.notifyDataSetChanged()
     }
 
     private fun showLoading(state: Boolean) {
