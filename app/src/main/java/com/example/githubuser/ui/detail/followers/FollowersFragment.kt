@@ -57,13 +57,7 @@ class FollowersFragment: Fragment(R.layout.fragment_follow) {
     }
 
     private fun showLoading(state: Boolean) {
-        binding.apply {
-            if (state) {
-                progressBar.visibility = View.VISIBLE
-            } else {
-                progressBar.visibility = View.GONE
-            }
-        }
+        binding.progressBar.visibility = if (state) View.VISIBLE else View.GONE
     }
 
     override fun onDestroy() {

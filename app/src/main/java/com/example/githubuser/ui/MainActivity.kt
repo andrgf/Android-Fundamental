@@ -96,10 +96,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showLoading(state: Boolean) {
-        if (state) {
-            binding.progressBar.visibility = View.VISIBLE
-        } else {
-            binding.progressBar.visibility = View.GONE
-        }
+        binding.progressBar.visibility = if (state) View.VISIBLE else View.GONE
     }
 }
