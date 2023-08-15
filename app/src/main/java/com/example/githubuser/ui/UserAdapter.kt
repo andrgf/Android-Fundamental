@@ -18,11 +18,6 @@ class UserAdapter: RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
         this.onItemClickCallback = onItemClickCallback
     }
 
-    fun setList(users: ArrayList<User>) {
-        list.clear()
-        list.addAll(users)
-    }
-
     fun updateList(newList: ArrayList<User>) {
         val userDiff = UserDiffutils(list, newList)
         val result = DiffUtil.calculateDiff(userDiff)
