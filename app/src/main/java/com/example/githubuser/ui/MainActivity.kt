@@ -6,9 +6,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuItem
 import android.view.View
-import android.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubuser.R
@@ -30,7 +28,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         userAdapter = UserAdapter()
-        userAdapter.notifyDataSetChanged()
 
         userAdapter.setOnItemClickCallback(object : UserAdapter.OnItemClickCallback{
             override fun onItemClicked(data: User) {
@@ -59,7 +56,7 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.getSearchUser().observe(this) {
             if (it != null) {
-                userAdapter.setList(it)
+                userAdapter.updateList(it)
                 showLoading(false)
             }
         }
@@ -93,7 +90,6 @@ class MainActivity : AppCompatActivity() {
     private fun searchUser() {
         binding.apply {
             rvSearchUser.adapter = userAdapter
-            userAdapter.clearList()
             showLoading(true)
             viewModel.setSearchUsers(etQuery)
         }
