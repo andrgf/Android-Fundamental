@@ -12,17 +12,17 @@ import com.example.githubuser.databinding.ItemUserBinding
 class UserAdapter: RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
     private var list = ArrayList<User>()
+    fun updateList(newList: List<User>) {
+        val userDiff = UserDiffutils(list, newList)
+        val result = DiffUtil.calculateDiff(userDiff)
+        this.list.clear()
+        this.list.addAll(newList)
+        result.dispatchUpdatesTo(this)
+    }
 
     private var onItemClickCallback: OnItemClickCallback? = null
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback
-    }
-
-    fun updateList(newList: ArrayList<User>) {
-        val userDiff = UserDiffutils(list, newList)
-        val result = DiffUtil.calculateDiff(userDiff)
-        list = newList
-        result.dispatchUpdatesTo(this)
     }
 
     inner class UserViewHolder(private val binding: ItemUserBinding): RecyclerView.ViewHolder(binding.root) {
@@ -49,7 +49,6 @@ class UserAdapter: RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         holder.bind(list[position])
-        holder.setIsRecyclable(false)
     }
 
     override fun getItemCount(): Int = list.size
